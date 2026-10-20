@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building a Crowd Counter That Doesn't Lie — Kyle Young</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #000; font-size: 16px; line-height: 1.6; }
+    a { color: #000; }
+    header { padding: 2rem; border-bottom: 1px solid #000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    header h1 { font-size: 1.25rem; font-weight: 600; }
+    .header-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
+    nav { padding: 0 2rem; border-bottom: 1px solid #000; display: flex; }
+    nav a { display: block; padding: 0.75rem 0; margin-right: 2rem; font-size: 0.875rem; text-decoration: none; border-bottom: 2px solid transparent; }
+    nav a:hover { border-bottom-color: #000; }
+    main { max-width: 680px; margin: 0 auto; padding: 0 2rem; }
+    .back { display: inline-block; font-size: 0.875rem; margin: 2rem 0 0; text-decoration: underline; }
+    .post-header { padding: 2rem 0 1.5rem; border-bottom: 1px solid #ddd; margin-bottom: 2rem; }
+    .post-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.2; }
+    .post-meta { font-size: 0.8125rem; color: #888; }
+    .post-body p { margin-bottom: 1.25rem; color: #1a1a1a; line-height: 1.75; }
+    .post-body h2 { font-size: 1.125rem; font-weight: 600; margin: 2.5rem 0 0.75rem; }
+    .post-body ul { margin: 0.5rem 0 1.25rem 1.5rem; color: #1a1a1a; line-height: 1.75; }
+    .post-body ul li { margin-bottom: 0.4rem; }
+    .post-body pre { background: #f5f5f5; border: 1px solid #ddd; padding: 1.25rem; overflow-x: auto; margin: 1.5rem 0; font-size: 0.875rem; line-height: 1.6; border-radius: 4px; }
+    .post-body code { font-family: 'SF Mono', Menlo, monospace; font-size: 0.875em; }
+    .post-body p code { background: #f5f5f5; padding: 0.1em 0.35em; border-radius: 3px; border: 1px solid #e0e0e0; }
+    footer { padding: 1.5rem 2rem; border-top: 1px solid #000; font-size: 0.8125rem; color: #888; margin-top: 3rem; }
+
+    /* Case blocks */
+    .case { border: 1px solid #000; margin: 2.5rem 0 0; }
+    .case-label {
+      display: flex; align-items: baseline; gap: 0.75rem;
+      padding: 0.875rem 1.25rem;
+      border-bottom: 1px solid #000;
+      background: #000;
+    }
+    .case-number { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #888; white-space: nowrap; }
+    .case-title { font-size: 0.9375rem; font-weight: 600; color: #fff; }
+    .case-body { padding: 1.25rem; }
+    .case-body p { margin-bottom: 1rem; }
+    .case-body p:last-child { margin-bottom: 0; }
+    .case-body pre { margin: 1rem 0; }
+    .case-body pre:last-child { margin-bottom: 0; }
+
+    /* Takeaways */
+    .takeaways { border: 1px solid #ddd; padding: 1.5rem; margin-top: 2.5rem; background: #fafafa; }
+    .takeaways h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #666; margin-bottom: 1rem; }
+    .takeaways ul { list-style: none; padding: 0; margin: 0; }
+    .takeaways ul li { font-size: 0.9375rem; color: #1a1a1a; line-height: 1.7; padding: 0.5rem 0; border-bottom: 1px solid #eee; display: flex; gap: 0.75rem; }
+    .takeaways ul li:last-child { border-bottom: none; padding-bottom: 0; }
+    .takeaways ul li::before { content: "→"; flex-shrink: 0; color: #999; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" style="text-decoration:none"><h1>Kyle Young</h1></a>
+  <div class="header-links">
+    <a href="mailto:kyle@kyleyoung.dev">Email</a>
+    <a href="https://linkedin.com/in/kyle--young/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/k-yleyoung" target="_blank">GitHub</a>
+  </div>
+</header>
+
+<nav>
+  <a href="../index.html#blog">Blog</a>
+  <a href="../index.html#projects">Projects</a>
+  <a href="../index.html#experience">Experience</a>
+</nav>
+
+<main>
+  <a href="index.html" class="back">← All Posts</a>
+
+  <div class="post-header">
+    <h1 class="post-title">Building a Crowd Counter That Doesn't Lie</h1>
+    <div class="post-meta">May 2026 · 10 min read · Swift · iOS · Firebase</div>
+  </div>
+
+  <div class="post-body">
+    <p>When I started building an app that tracks how busy venues are in real time, I thought the crowd counter would be the easy part. The idea was simple: use geofences to passively detect when a user walks into a bar or restaurant, increment a headcount, and decrement it when they leave. No manual check-ins, everything automatic in the background.</p>
+
+    <p>After the first real-world test I had venues showing negative headcounts, counts stuck way too high, and numbers that never moved. Every one of those was a different bug, and fixing them taught me that a counter this simple on paper has a lot of ways to go wrong in production.</p>
+
+    <p>Here's every failure mode I ran into and how I fixed each one.</p>
+
+    <div class="case">
+      <div class="case-label">
+        <span class="case-number">Case 1</span>
+        <span class="case-title">Geofence fires twice for the same crossing</span>
+      </div>
+      <div class="case-body">
+        <p>The first thing I noticed was that walking into a venue sometimes incremented the counter twice. iOS fires duplicate <code>didEnterRegion</code> and <code>didExitRegion</code> callbacks near boundaries. The device oscillates around the edge and the system triggers the event more than once. This is just how geofence monitoring behaves in the real world.</p>
+        <p>The fix is a debounce on the client. Before any network request goes out, I check how long it's been since the last event of the same type. If it's under 10 seconds, I drop it:</p>
+        <pre><code>let now = Date()
+if let last = lastEntryEventTime, now.timeIntervalSince(last) &lt; 10 { return }
+lastEntryEventTime = now</code></pre>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-label">
+        <span class="case-number">Case 2</span>
+        <span class="case-title">The debounce breaks exits</span>
+      </div>
+      <div class="case-body">
+        <p>My first version of the debounce used one shared timer for both entry and exit events. That introduced a new bug.</p>
+        <p>Picture this: a user quickly crosses a boundary, entry fires, and then six seconds later the exit fires. The shared timer resets on entry, so when the exit comes in it's only been six seconds and gets dropped. The user left the venue and the counter stayed stuck.</p>
+        <p>Keep two independent timestamps, one for entry and one for exit, so each type only debounces itself:</p>
+        <pre><code>private var lastEntryEventTime: Date?
+private var lastExitEventTime: Date?</code></pre>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-label">
+        <span class="case-number">Case 3</span>
+        <span class="case-title">Duplicates that reach the server anyway</span>
+      </div>
+      <div class="case-body">
+        <p>The debounce reduces duplicates but some still get through. An app relaunch, a crash and restart, or weird timing between events can all let a duplicate entry reach the server.</p>
+        <p>So I added a second layer of validation server-side. Instead of only storing the headcount on the venue, I keep a separate <code>deviceCheckins</code> document that records which venue each device is currently inside:</p>
+        <pre><code>// deviceCheckins/{deviceId}
+{
+  currentHotspotId: "venue_abc",
+  updated: "2026-06-10T21:00:00Z"
+}</code></pre>
+        <p>Before touching the counter, the server checks this record. If the device is already recorded as inside that venue, the write is rejected and the count stays where it is:</p>
+        <pre><code>if (deviceState?.currentHotspotId === hotspotId) {
+    return { success: true, updated: false };
+}</code></pre>
+        <p>The client gets a success response either way. The distinction is handled entirely server-side.</p>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-label">
+        <span class="case-number">Case 4</span>
+        <span class="case-title">The exit that never comes</span>
+      </div>
+      <div class="case-body">
+        <p>This one took me a while to notice. Everything looked fine until I started seeing venues with headcounts that crept up over several days and never came back down.</p>
+        <p>What was happening: if a user's app got killed mid-visit, or their phone died, the exit event never fired. The device stayed permanently recorded as inside a venue and the count was stuck one too high with nothing to correct it.</p>
+        <p>Exit events sometimes never arrive, so I added an auto-exit on the server. Whenever a device checks into a new venue, the server checks if it's currently recorded somewhere else. If it is, it exits that venue first:</p>
+        <pre><code>if (deviceState?.currentHotspotId && deviceState.currentHotspotId !== hotspotId) {
+    transaction.update(prevHotspotRef, {
+        headcount: Math.max(0, prevCount - 1)
+    });
+}</code></pre>
+        <p>A user can only be in one place at a time. Enforcing that server-side means every missed exit self-heals the next time the user goes somewhere new.</p>
+        <p>That covers one version of this problem. The other version: a user leaves a venue, goes home, and stops using the app. They make no new check-in, so auto-exit has nothing to act on. Their device stays recorded as inside a venue indefinitely.</p>
+        <p>The fix for this is a scheduled cleanup job that runs every hour. It scans all <code>deviceCheckins</code> documents and decrements any venue where the check-in is older than six hours:</p>
+        <pre><code>const sixHoursAgo = new Date(now.getTime() - (6 * 60 * 60 * 1000));
+
+for (const doc of snapshot.docs) {
+    if (!data.currentHotspotId) continue;
+    if (data.updated >= sixHoursAgoISO) continue;
+
+    await db.runTransaction(async (transaction) => {
+        // Re-read before writing to avoid race conditions
+        const freshDevice = await transaction.get(doc.ref);
+        const freshHotspot = await transaction.get(hotspotRef);
+
+        transaction.update(doc.ref, { currentHotspotId: null });
+
+        if (freshCount > 0) {
+            transaction.update(hotspotRef, {
+                headcount: Math.max(0, freshCount - 1)
+            });
+        }
+    });
+}</code></pre>
+        <p>Six hours is a judgment call for the kind of venues the app covers. For a different use case that number would need tuning. Without some upper bound, stale check-ins accumulate and the counts drift upward permanently.</p>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-label">
+        <span class="case-number">Case 5</span>
+        <span class="case-title">Two users walking in at the same time</span>
+      </div>
+      <div class="case-body">
+        <p>Two devices check in simultaneously, both read the same count, both write count + 1, and one increment gets lost:</p>
+        <pre><code>Device A reads count: 5
+Device B reads count: 5
+Device A writes:      6
+Device B writes:      6  // should be 7</code></pre>
+        <p>I wrapped every write in a Firestore transaction. The transaction reads both the device state and the hotspot count atomically and writes them together. If another write touches either document mid-transaction, Firestore retries it automatically:</p>
+        <pre><code>await db.runTransaction(async (transaction) => {
+    const deviceDoc = await transaction.get(deviceStateRef);
+    const hotspotDoc = await transaction.get(hotspotRef);
+
+    // all reads first, then all writes
+    transaction.set(deviceStateRef, { currentHotspotId: hotspotId, ... });
+    transaction.update(hotspotRef, { headcount: currentCount + 1 });
+});</code></pre>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-label">
+        <span class="case-number">Case 6</span>
+        <span class="case-title">The counter goes negative</span>
+      </div>
+      <div class="case-body">
+        <p>With proper state tracking most bad decrements get caught upstream, but I still wanted a hard floor as a last line of defense. Data gets corrupted from a bad deploy, a manual Firestore edit, or an edge case you missed. Every decrement clamps at zero:</p>
+        <pre><code>const newCount = Math.max(0, currentCount - 1);</code></pre>
+        <p>A counter showing zero when people are inside is a minor UX issue. A counter showing -4 is a trust issue.</p>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-label">
+        <span class="case-number">Case 7</span>
+        <span class="case-title">Device state out of sync with the count</span>
+      </div>
+      <div class="case-body">
+        <p>The last edge case I ran into was subtler. Sometimes a device record would show a user as checked in, but the counter for that venue was already at zero. Case 6 stops the decrement, but the stale device record causes problems on the next event from that device.</p>
+        <p>The fix was to always clear the device state, even when skipping the decrement:</p>
+        <pre><code>if (currentCount &lt;= 0) {
+    transaction.set(deviceStateRef, { currentHotspotId: null, ... });
+    return { success: true, updated: false };
+}</code></pre>
+        <p>The record gets corrected without touching the count, and the next event from that device is treated as a clean slate.</p>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h2>What I learned</h2>
+      <ul>
+        <li>The client debounce cuts down the volume of duplicate requests reaching the server.</li>
+        <li>Server-side state tracking rejects the duplicates that get through anyway.</li>
+        <li>Auto-exit handles missed exits. A user can only be in one place at a time, and enforcing that server-side means every missed exit self-heals on the next check-in.</li>
+        <li>Transactions keep simultaneous writes consistent without any extra coordination logic.</li>
+        <li>The floor and state correction clean up whatever is left. All of these work together.</li>
+      </ul>
+    </div>
+
+    <p style="margin-top: 1.5rem;">Building this out was one of the more interesting problems in the whole app. On the surface it's just a number going up and down, but keeping that number accurate under real conditions meant thinking through every way it could drift, and handling each one separately.</p>
+  </div>
+</main>
+
+<footer>© 2026 Kyle Young</footer>
+</body>
+</html>

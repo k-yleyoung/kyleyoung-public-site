@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Kyle Young</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #000; font-size: 16px; line-height: 1.6; }
+    a { color: #000; }
+    header { padding: 2rem; border-bottom: 1px solid #000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    header h1 { font-size: 1.25rem; font-weight: 600; }
+    .header-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
+    nav { padding: 0 2rem; border-bottom: 1px solid #000; display: flex; }
+    nav a { display: block; padding: 0.75rem 0; margin-right: 2rem; font-size: 0.875rem; text-decoration: none; border-bottom: 2px solid transparent; }
+    nav a:hover { border-bottom-color: #000; }
+    main { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 3rem 0; }
+    h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #666; margin-bottom: 1.5rem; }
+    .post { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid #eee; text-decoration: none; color: #000; }
+    .post:last-child { border-bottom: none; }
+    .post:hover .post-title { text-decoration: underline; }
+    .post-title { font-size: 0.9375rem; }
+    .post-date { font-size: 0.8125rem; color: #888; white-space: nowrap; }
+    footer { padding: 1.5rem 2rem; border-top: 1px solid #000; font-size: 0.8125rem; color: #888; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" style="text-decoration:none"><h1>Kyle Young</h1></a>
+  <div class="header-links">
+    <a href="mailto:kyle@kyleyoung.dev">Email</a>
+    <a href="https://linkedin.com/in/kyle--young/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/k-yleyoung" target="_blank">GitHub</a>
+  </div>
+</header>
+
+<nav>
+  <a href="../index.html#blog">Blog</a>
+  <a href="../index.html#projects">Projects</a>
+  <a href="../index.html#experience">Experience</a>
+</nav>
+
+<main>
+  <section>
+    <h2>All Posts</h2>
+    <a href="swiftui-always-location.html" class="post">
+      <span class="post-title">How I Handled "Always" Location Access in a SwiftUI App</span>
+      <span class="post-date">Jun 2026</span>
+    </a>
+    <a href="crowd-counter-accuracy.html" class="post">
+      <span class="post-title">Building a Crowd Counter That Doesn't Lie</span>
+      <span class="post-date">May 2026</span>
+    </a>
+    <a href="ios-location-monitoring-terminated.html" class="post">
+      <span class="post-title">How to Make an iOS App Monitor Location When Terminated/Killed</span>
+      <span class="post-date">Mar 2026</span>
+    </a>
+  </section>
+</main>
+
+<footer>© 2026 Kyle Young</footer>
+</body>
+</html>

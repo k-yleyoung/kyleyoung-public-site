@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Request a new hotspot for Crowd Track.">
+  <title>Request a Hotspot — Crowd Track</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #000; font-size: 16px; line-height: 1.6; }
+    a { color: #000; }
+    header { padding: 2rem; border-bottom: 1px solid #000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    header h1 { font-size: 1.25rem; font-weight: 600; }
+    nav { padding: 0 2rem; border-bottom: 1px solid #000; display: flex; }
+    nav a { display: block; padding: 0.75rem 0; margin-right: 2rem; font-size: 0.875rem; text-decoration: none; border-bottom: 2px solid transparent; }
+    nav a:hover { border-bottom-color: #000; }
+    main { max-width: 600px; margin: 0 auto; padding: 3rem 2rem; }
+    h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .sub { font-size: 0.9rem; color: #444; margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    label { display: block; font-size: 0.8125rem; font-weight: 600; margin-bottom: 0.35rem; }
+    input, select, textarea {
+      width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #ccc; border-radius: 0;
+      font-family: inherit; font-size: 0.9375rem; color: #000; background: #fff;
+      appearance: none; -webkit-appearance: none;
+    }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #000; }
+    textarea { resize: vertical; min-height: 90px; }
+    small { display: block; font-size: 0.75rem; color: #888; margin-top: 0.3rem; }
+    button {
+      background: #000; color: #fff; border: none; padding: 0.7rem 1.75rem;
+      font-family: inherit; font-size: 0.875rem; font-weight: 600; cursor: pointer;
+    }
+    button:hover { background: #333; }
+    #form-status { margin-top: 1rem; font-size: 0.875rem; padding: 0.75rem; border: 1px solid #000; display: none; }
+    footer { padding: 1.5rem 2rem; border-top: 1px solid #000; font-size: 0.8125rem; color: #888; margin-top: 3rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="crowd-track.html" style="text-decoration:none"><h1>Crowd Track</h1></a>
+</header>
+
+<nav>
+  <a href="crowd-track.html">← Back</a>
+</nav>
+
+<main>
+  <h2>Request a Hotspot</h2>
+  <p class="sub">Don't see your location? Submit a request and we'll add it if it meets our criteria.</p>
+
+  <form id="hotspotRequestForm" action="https://formspree.io/f/mgvkjqer" method="POST">
+    <div class="form-group">
+      <label for="hotspotName">Hotspot Name *</label>
+      <input type="text" id="hotspotName" name="hotspotName" placeholder="e.g., Downtown Coffee Shop" required>
+    </div>
+    <div class="form-group">
+      <label for="city">City *</label>
+      <input type="text" id="city" name="city" placeholder="e.g., Cupertino" required>
+    </div>
+    <div class="form-group">
+      <label for="state">State *</label>
+      <select id="state" name="state" required>
+        <option value="" disabled selected>Select a state</option>
+        <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+        <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+        <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+        <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
+        <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
+        <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+        <option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option>
+        <option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
+        <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+        <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
+        <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
+        <option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option>
+        <option>Wisconsin</option><option>Wyoming</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="yourEmail">Your Email *</label>
+      <input type="email" id="yourEmail" name="_replyto" placeholder="you@example.com" required>
+      <small>We'll notify you when this location is added.</small>
+    </div>
+    <div class="form-group">
+      <label for="notes">Additional Notes</label>
+      <textarea id="notes" name="notes" placeholder="Any extra details about this location..."></textarea>
+    </div>
+    <button type="submit">Submit Request</button>
+    <div id="form-status"></div>
+  </form>
+</main>
+
+<footer>© 2026 Kyle Young</footer>
+
+<script>
+  document.getElementById('hotspotRequestForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const status = document.getElementById('form-status');
+    const btn = form.querySelector('button');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    status.style.display = 'none';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(form)),
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
+      if (res.ok) {
+        status.textContent = 'Request submitted — thank you!';
+        form.reset();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      status.textContent = 'Something went wrong. Please email kyle@kyleyoung.dev directly.';
+    } finally {
+      status.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Submit Request';
+    }
+  });
+</script>
+</body>
+</html>

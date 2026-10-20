@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How I Handled "Always" Location Access in a SwiftUI App — Kyle Young</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #000; font-size: 16px; line-height: 1.6; }
+    a { color: #000; }
+    header { padding: 2rem; border-bottom: 1px solid #000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    header h1 { font-size: 1.25rem; font-weight: 600; }
+    .header-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
+    nav { padding: 0 2rem; border-bottom: 1px solid #000; display: flex; }
+    nav a { display: block; padding: 0.75rem 0; margin-right: 2rem; font-size: 0.875rem; text-decoration: none; border-bottom: 2px solid transparent; }
+    nav a:hover { border-bottom-color: #000; }
+    main { max-width: 680px; margin: 0 auto; padding: 0 2rem; }
+    .back { display: inline-block; font-size: 0.875rem; margin: 2rem 0 0; text-decoration: underline; }
+    .post-header { padding: 2rem 0 1.5rem; border-bottom: 1px solid #ddd; margin-bottom: 2rem; }
+    .post-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.2; }
+    .post-meta { font-size: 0.8125rem; color: #888; }
+    .post-body p { margin-bottom: 1.25rem; color: #1a1a1a; line-height: 1.75; }
+    .post-body h2 { font-size: 1.125rem; font-weight: 600; margin: 2.5rem 0 0.75rem; }
+    .post-body ul { margin: 0.5rem 0 1.25rem 1.5rem; color: #1a1a1a; line-height: 1.75; }
+    .post-body ul li { margin-bottom: 0.4rem; }
+    .post-body pre { background: #f5f5f5; border: 1px solid #ddd; padding: 1.25rem; overflow-x: auto; margin: 1.5rem 0; font-size: 0.875rem; line-height: 1.6; border-radius: 4px; }
+    .post-body code { font-family: 'SF Mono', Menlo, monospace; font-size: 0.875em; }
+    .post-body p code { background: #f5f5f5; padding: 0.1em 0.35em; border-radius: 3px; border: 1px solid #e0e0e0; }
+    .callout { background: #f9f9f9; border-left: 3px solid #000; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.9375rem; color: #1a1a1a; line-height: 1.75; }
+    .status-list { list-style: none; padding: 0; margin: 1rem 0 1.25rem; border: 1px solid #e0e0e0; border-radius: 4px; overflow: hidden; }
+    .status-list li { display: flex; gap: 1rem; padding: 0.75rem 1rem; border-bottom: 1px solid #e0e0e0; font-size: 0.9375rem; color: #1a1a1a; align-items: baseline; }
+    .status-list li:last-child { border-bottom: none; }
+    .status-list li code { flex-shrink: 0; font-family: 'SF Mono', Menlo, monospace; font-size: 0.8125em; background: #f5f5f5; padding: 0.1em 0.35em; border-radius: 3px; border: 1px solid #e0e0e0; }
+    .flow-list { list-style: none; padding: 0; margin: 1rem 0 1.25rem; counter-reset: flow; }
+    .flow-list li { counter-increment: flow; display: flex; gap: 1rem; padding: 0.875rem 0; border-bottom: 1px solid #eee; font-size: 0.9375rem; color: #1a1a1a; line-height: 1.65; align-items: baseline; }
+    .flow-list li:last-child { border-bottom: none; }
+    .flow-list li::before { content: counter(flow); flex-shrink: 0; font-size: 0.75rem; font-weight: 700; color: #fff; background: #000; width: 1.4rem; height: 1.4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: 0.15rem; }
+    footer { padding: 1.5rem 2rem; border-top: 1px solid #000; font-size: 0.8125rem; color: #888; margin-top: 3rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" style="text-decoration:none"><h1>Kyle Young</h1></a>
+  <div class="header-links">
+    <a href="mailto:kyle@kyleyoung.dev">Email</a>
+    <a href="https://linkedin.com/in/kyle--young/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/k-yleyoung" target="_blank">GitHub</a>
+  </div>
+</header>
+
+<nav>
+  <a href="../index.html#blog">Blog</a>
+  <a href="../index.html#projects">Projects</a>
+  <a href="../index.html#experience">Experience</a>
+</nav>
+
+<main>
+  <a href="index.html" class="back">← All Posts</a>
+
+  <div class="post-header">
+    <h1 class="post-title">How I Handled "Always" Location Access in a SwiftUI App</h1>
+    <div class="post-meta">June 2026 · 7 min read · Swift · SwiftUI · CoreLocation</div>
+  </div>
+
+  <div class="post-body">
+    <p>When I was building an app that passively tracks which venues users are at, I quickly realized the whole thing falls apart without "Always" location access. The background geofencing, the significant location changes that keep things running when the app is killed — both require Always. It was a hard requirement.</p>
+
+    <p>That meant thinking carefully about how to ask for it, what to do when users granted less than I needed, and how to handle every state the OS could put me in. Here's how I approached each part.</p>
+
+    <h2>Why "Always" is a hard requirement</h2>
+
+    <p>Apple's location permission model has two tiers. "When In Use" gives you location updates while the app is in the foreground or actively running in the background. "Always" gives you access to significant location change monitoring and region monitoring, both of which can wake or relaunch a killed app.</p>
+
+    <p>For an app that needs to detect venue entry and exit passively, "When In Use" stops working the moment the app closes.</p>
+
+    <h2>Initializing the LocationManager early</h2>
+
+    <p>The first thing I got wrong was initializing <code>LocationManager</code> inside a view. If iOS relaunches the app in the background due to a location event, it goes through <code>AppDelegate</code> first. Your <code>LocationManager</code> needs to be alive by then. Initialize it after views load and the event is gone before your code ever runs.</p>
+
+    <p>The fix is to initialize it in <code>AppDelegate</code>, before any views exist:</p>
+
+    <pre><code>func application(_ application: UIApplication,
+                 didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    _ = LocationManager.shared
+    return true
+}</code></pre>
+
+    <p>One line, but it determines whether background events get delivered at all.</p>
+
+    <h2>The permission state machine</h2>
+
+    <p><code>CLAuthorizationStatus</code> has five states worth handling differently:</p>
+
+    <ul class="status-list">
+      <li><code>.notDetermined</code> User hasn't been asked yet. Call <code>requestAlwaysAuthorization()</code> and wait.</li>
+      <li><code>.authorizedWhenInUse</code> User granted partial access. The system prompt for "Always" can still be shown.</li>
+      <li><code>.authorizedAlways</code> Full access, everything works.</li>
+      <li><code>.denied</code> User explicitly denied. The only option is sending them to Settings.</li>
+      <li><code>.restricted</code> Parental controls or MDM policy. No prompting is possible.</li>
+    </ul>
+
+    <p>Most apps treat these as binary. The difference between <code>.notDetermined</code> and <code>.denied</code> matters: <code>.notDetermined</code> allows a system prompt; <code>.denied</code> sends the user to Settings.</p>
+
+    <h2>The hard gate</h2>
+
+    <p>I decided early to gate the main UI on Always access. The core feature requires it, and letting users in with partial access just creates confusion. The gate in <code>ContentView</code>:</p>
+
+    <pre><code>if locationManager.authorizationStatus != .authorizedAlways {
+    LocationRequestView()
+} else {
+    MainAppView()
+}</code></pre>
+
+    <p>This applies both during onboarding and after. If a user downgrades their permission in Settings and comes back to the app, they see the request screen again instead of a broken experience.</p>
+
+    <h2>The WhenInUse to Always upgrade path</h2>
+
+    <p>iOS supports upgrading from "When In Use" to "Always". Calling <code>requestAlwaysAuthorization()</code> after the user already granted "When In Use" triggers the upgrade prompt. I handle this in two places.</p>
+
+    <p>First, in <code>LocationRequestView</code> on appear, I call <code>requestAlwaysAuthorization()</code> if the status is <code>.notDetermined</code> or <code>.authorizedWhenInUse</code>. For first-time users this triggers the system prompt immediately. For users who already granted partial access, it shows the upgrade dialog.</p>
+
+    <pre><code>.onAppear {
+    let status = LocationManager.shared.authorizationStatus
+    if status == .notDetermined || status == .authorizedWhenInUse {
+        LocationManager.shared.requestAlwaysAuthorization()
+    }
+}</code></pre>
+
+    <p>Second, I watch for status changes in <code>ContentView</code>. If the user grants "When In Use" through the system prompt, I immediately ask to upgrade:</p>
+
+    <pre><code>.onChange(of: locationManager.authorizationStatus) { _, status in
+    if status == .authorizedWhenInUse {
+        locationManager.requestAlwaysAuthorization()
+    }
+}</code></pre>
+
+    <h2>When the user has already denied</h2>
+
+    <p>After a user denies "Always" or denies location entirely, iOS blocks any further system prompts. The only path is Settings.</p>
+
+    <p><code>LocationRequestView</code> handles this with a step-by-step explanation and an "Open Settings" button:</p>
+
+    <pre><code>Button("Open Settings") {
+    if let url = URL(string: UIApplication.openSettingsURLString) {
+        UIApplication.shared.open(url)
+    }
+}</code></pre>
+
+    <p>The instructions in the view walk through exactly what to tap: Settings, then Location, then Always. Users who actually want the feature working will follow these steps.</p>
+
+    <h2>The Settings return problem</h2>
+
+    <p>There's a subtle iOS behavior that caught me: when a user changes location permissions in Settings and comes back to the app, <code>didChangeAuthorization</code> sometimes skips entirely. Your published <code>authorizationStatus</code> stays stale and the UI stays on the request screen even though the user just granted Always.</p>
+
+    <p>The fix is to re-read the authorization status explicitly whenever the app becomes active:</p>
+
+    <pre><code>.onChange(of: scenePhase) { _, newPhase in
+    if newPhase == .active {
+        locationManager.refreshAuthorizationStatus()
+    }
+}</code></pre>
+
+    <p>And in <code>LocationManager</code>:</p>
+
+    <pre><code>func refreshAuthorizationStatus() {
+    authorizationStatus = locationManager.authorizationStatus
+}</code></pre>
+
+    <p>Skip this and users who grant permission in Settings come back to the request screen still showing. They assume it broke and stop trying.</p>
+
+    <h2>The same problem on init</h2>
+
+    <p>A related issue happens on launch. If you declare <code>authorizationStatus</code> as <code>@Published var authorizationStatus: CLAuthorizationStatus = .notDetermined</code>, any view observing it will briefly see <code>.notDetermined</code> even if the user granted "Always" a month ago.</p>
+
+    <p>The fix is to read the real status synchronously in <code>init</code> before any observer sees the value:</p>
+
+    <pre><code>override init() {
+    super.init()
+    locationManager.delegate = self
+    authorizationStatus = locationManager.authorizationStatus // read real value immediately
+}</code></pre>
+
+    <p>Any view depending on <code>authorizationStatus</code> renders correctly on the first pass instead of flashing the wrong state.</p>
+
+    <h2>What the full flow looks like</h2>
+
+    <ul class="flow-list">
+      <li>First launch. <code>LocationManager</code> is initialized in <code>AppDelegate</code>. <code>authorizationStatus</code> is read synchronously and is <code>.notDetermined</code>.</li>
+      <li><code>ContentView</code> shows <code>LocationRequestView</code>. On appear, <code>requestAlwaysAuthorization()</code> is called and the system prompt appears.</li>
+      <li>User taps "Allow While Using." Status becomes <code>.authorizedWhenInUse</code>. <code>ContentView</code> detects this and immediately calls <code>requestAlwaysAuthorization()</code> again to trigger the upgrade prompt.</li>
+      <li>User grants "Always." Status becomes <code>.authorizedAlways</code>. <code>LocationRequestView</code> is dismissed and the main app appears.</li>
+      <li>Later, user downgrades to "While Using" in Settings. They come back to the app, <code>scenePhase</code> changes to <code>.active</code>, <code>refreshAuthorizationStatus()</code> is called, status updates to <code>.authorizedWhenInUse</code>, and <code>LocationRequestView</code> is shown again.</li>
+    </ul>
+
+    <p>Every state is handled and the user always knows what's going on.</p>
+  </div>
+</main>
+
+<footer>© 2026 Kyle Young</footer>
+</body>
+</html>

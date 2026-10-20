@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kyle Young — Software Engineer">
+  <title>Kyle Young</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fff;
+      color: #000;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    a { color: #000; }
+    a:hover { text-decoration: none; }
+
+    header {
+      padding: 2rem;
+      border-bottom: 1px solid #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    header h1 { font-size: 1.25rem; font-weight: 600; }
+
+    .header-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
+
+    nav {
+      padding: 0 2rem;
+      border-bottom: 1px solid #000;
+      display: flex;
+      gap: 0;
+    }
+
+    nav a {
+      display: block;
+      padding: 0.75rem 0;
+      margin-right: 2rem;
+      font-size: 0.875rem;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+    }
+
+    nav a:hover { border-bottom-color: #000; }
+
+    main { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+
+    section { padding: 3rem 0; border-bottom: 1px solid #ddd; }
+    section:last-child { border-bottom: none; }
+
+    h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #666; margin-bottom: 1.5rem; }
+
+    .name { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .tagline { font-size: 1rem; color: #444; max-width: 500px; line-height: 1.7; }
+
+    .job { margin-bottom: 2rem; }
+    .job:last-child { margin-bottom: 0; }
+    .job-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.25rem; }
+    .job-title { font-weight: 600; }
+    .job-date { font-size: 0.8125rem; color: #888; white-space: nowrap; }
+    .job ul { margin-top: 0.5rem; padding-left: 1.25rem; color: #333; font-size: 0.9rem; }
+    .job ul li { margin-bottom: 0.25rem; }
+
+    .project { margin-bottom: 2rem; }
+    .project:last-child { margin-bottom: 0; }
+    .project-title { font-weight: 600; margin-bottom: 0.25rem; }
+    .project-title a { text-decoration: underline; }
+    .project-year { font-size: 0.8125rem; color: #888; margin-bottom: 0.4rem; }
+    .project p { font-size: 0.9rem; color: #333; }
+
+    .edu-name { font-weight: 600; }
+    .edu-detail { font-size: 0.9rem; color: #444; margin-top: 0.25rem; }
+
+    .skills-list { font-size: 0.9rem; color: #333; line-height: 2; }
+
+    .blog-post { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid #eee; text-decoration: none; color: #000; }
+    .blog-post:last-child { border-bottom: none; }
+    .blog-post:hover .blog-title { text-decoration: underline; }
+    .blog-title { font-size: 0.9375rem; }
+    .blog-date { font-size: 0.8125rem; color: #888; white-space: nowrap; }
+    .blog-see-all { font-size: 0.875rem; margin-top: 1rem; display: inline-block; }
+
+    .contact-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .contact-links a { font-size: 0.9375rem; text-decoration: underline; }
+
+    footer { padding: 1.5rem 2rem; border-top: 1px solid #000; font-size: 0.8125rem; color: #888; }
+
+    @media (max-width: 600px) {
+      .header-links { gap: 1rem; font-size: 0.8125rem; }
+      .name { font-size: 1.75rem; }
+      .job-header { flex-direction: column; gap: 0.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Kyle Young</h1>
+  <div class="header-links">
+    <a href="mailto:kyle@kyleyoung.dev">Email</a>
+    <a href="https://linkedin.com/in/kyle--young/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/k-yleyoung" target="_blank">GitHub</a>
+  </div>
+</header>
+
+<nav>
+  <a href="#blog">Blog</a>
+  <a href="#projects">Projects</a>
+  <a href="#experience">Experience</a>
+  <a href="#education">Education</a>
+</nav>
+
+<main>
+
+  <section id="blog">
+    <h2>Recent Posts</h2>
+    <a href="blog/swiftui-always-location.html" class="blog-post">
+      <span class="blog-title">How I Handled "Always" Location Access in a SwiftUI App</span>
+      <span class="blog-date">Jun 2026</span>
+    </a>
+    <a href="blog/crowd-counter-accuracy.html" class="blog-post">
+      <span class="blog-title">Building a Crowd Counter That Doesn't Lie</span>
+      <span class="blog-date">May 2026</span>
+    </a>
+    <a href="blog/ios-location-monitoring-terminated.html" class="blog-post">
+      <span class="blog-title">How to Make an iOS App Monitor Location When Terminated/Killed</span>
+      <span class="blog-date">Mar 2026</span>
+    </a>
+    <a href="blog/index.html" class="blog-see-all">All posts →</a>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <div class="project">
+      <div class="project-title"><a href="crowd-track.html">Crowd Track — iOS App</a></div>
+      <div class="project-year">2024 – Present</div>
+      <p>Full-stack SwiftUI app for real-time and historical crowd analytics. Firebase backend, interactive graphs, live reporting, and a chat feature. Available on the App Store.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-title">Columbia News &amp; Weather</div>
+      <div class="project-year">2023</div>
+      <p>Python web scraper displaying Columbia Tribune headlines alongside live weather data and a real-time clock.</p>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Ascend Learning — Software Engineer Intern</span>
+        <span class="job-date">May – September 2025</span>
+      </div>
+      <ul>
+        <li>Developed full-stack features for an internal ticketing and support platform built with Ruby on Rails, used by 800+ engineers company-wide.</li>
+        <li>Designed and shipped a Confluence plugin that surfaced live ticket data inside Confluence pages, eliminating context-switching between tools for support staff.</li>
+        <li>Deployed services on Kubernetes and instrumented monitoring with Datadog dashboards and alerts to improve incident response.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">Veterans United Home Loans — Software Engineer Intern</span>
+        <span class="job-date">May – August 2024</span>
+      </div>
+      <ul>
+        <li>Maintained and extended 4–10 RESTful APIs in a .NET MVC backend services codebase, applying Test-Driven Development to add coverage on critical paths.</li>
+        <li>Diagnosed and resolved production bugs across backend services, shipping fixes through GitLab merge requests and Azure DevOps CI/CD pipelines.</li>
+        <li>Collaborated in a 6-person Agile team using pair programming, sprint planning, and code review.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-title">World Agricultural Economic &amp; Environmental Services — Data Engineer Intern</span>
+        <span class="job-date">January – May 2024</span>
+      </div>
+      <ul>
+        <li>Built Python data pipelines to extract, clean, and process USDA commodity datasets on demand, replacing a manual workflow and enabling structured data delivery to downstream consumers.</li>
+        <li>Developed client login authentication and a client-facing blog for the company website, enabling subscriber-only content delivery to paying clients.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div class="edu-name">University of Missouri – Columbia</div>
+    <div class="edu-detail">B.S. Computer Science — May 2026</div>
+  </section>
+
+
+</main>
+
+<footer>© 2026 Kyle Young</footer>
+
+</body>
+</html>

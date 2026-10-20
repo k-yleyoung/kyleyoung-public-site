@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Make an iOS App Monitor Location When Terminated — Kyle Young</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #000; font-size: 16px; line-height: 1.6; }
+    a { color: #000; }
+    header { padding: 2rem; border-bottom: 1px solid #000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    header h1 { font-size: 1.25rem; font-weight: 600; }
+    .header-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
+    nav { padding: 0 2rem; border-bottom: 1px solid #000; display: flex; }
+    nav a { display: block; padding: 0.75rem 0; margin-right: 2rem; font-size: 0.875rem; text-decoration: none; border-bottom: 2px solid transparent; }
+    nav a:hover { border-bottom-color: #000; }
+    main { max-width: 680px; margin: 0 auto; padding: 0 2rem; }
+    .back { display: inline-block; font-size: 0.875rem; margin: 2rem 0 0; text-decoration: underline; }
+    .post-header { padding: 2rem 0 1.5rem; border-bottom: 1px solid #ddd; margin-bottom: 2rem; }
+    .post-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.2; }
+    .post-meta { font-size: 0.8125rem; color: #888; }
+    .post-body p { margin-bottom: 1.25rem; color: #1a1a1a; line-height: 1.75; }
+    .post-body h2 { font-size: 1.125rem; font-weight: 600; margin: 2rem 0 0.75rem; }
+    .post-body ul { margin: 0.5rem 0 1.25rem 1.5rem; color: #1a1a1a; line-height: 1.75; }
+    .post-body ul li { margin-bottom: 0.4rem; }
+    .post-body pre { background: #f5f5f5; border: 1px solid #ddd; padding: 1.25rem; overflow-x: auto; margin: 1.5rem 0; font-size: 0.875rem; line-height: 1.6; border-radius: 4px; }
+    .post-body code { font-family: 'SF Mono', Menlo, monospace; font-size: 0.875em; }
+    .post-body p code { background: #f5f5f5; padding: 0.1em 0.35em; border-radius: 3px; border: 1px solid #e0e0e0; }
+    .callout { background: #f9f9f9; border-left: 3px solid #000; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.9375rem; color: #1a1a1a; line-height: 1.75; }
+    .github-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; border: 1px solid #000; padding: 0.5rem 0.875rem; text-decoration: none; margin: 1.5rem 0; }
+    .github-link:hover { background: #000; color: #fff; }
+    footer { padding: 1.5rem 2rem; border-top: 1px solid #000; font-size: 0.8125rem; color: #888; margin-top: 3rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" style="text-decoration:none"><h1>Kyle Young</h1></a>
+  <div class="header-links">
+    <a href="mailto:kyle@kyleyoung.dev">Email</a>
+    <a href="https://linkedin.com/in/kyle--young/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/k-yleyoung" target="_blank">GitHub</a>
+  </div>
+</header>
+
+<nav>
+  <a href="../index.html#blog">Blog</a>
+  <a href="../index.html#projects">Projects</a>
+  <a href="../index.html#experience">Experience</a>
+</nav>
+
+<main>
+  <a href="index.html" class="back">← All Posts</a>
+
+  <div class="post-header">
+    <h1 class="post-title">How to Make an iOS App Monitor Location When Terminated/Killed</h1>
+    <div class="post-meta">March 2026 · 8 min read · Swift · iOS · CoreLocation</div>
+  </div>
+
+  <div class="post-body">
+    <p>While working on an iOS app last year that utilized location events, I had one critical issue to solve for: continuously monitoring user location. The app needed to monitor user location regardless of whether the app was in the foreground, background, suspended, or terminated.</p>
+
+    <p>After searching the internet and reading developer documentation, I was eventually able to come to a solution for this, but I figured I could hopefully give you a clearer, more detailed explanation on how to solve this issue.</p>
+
+    <h2>Understanding App States on iOS</h2>
+
+    <p>First, it's important to understand what "killed" means on iOS:</p>
+
+    <ul>
+      <li><strong>Foreground</strong> — app is on screen, full access to everything (this is the state the app is in when you are actively using it)</li>
+      <li><strong>Background</strong> — app is off screen but still running, limited time before suspension</li>
+      <li><strong>Suspended</strong> — app is in memory but no code is executing</li>
+      <li><strong>Terminated/Killed</strong> — app is not in memory at all</li>
+    </ul>
+
+    <p>Most location APIs work in the foreground and background with the right entitlements. Almost none of them survive suspension or termination. <code>startUpdatingLocation()</code> falls into that category — once the app is suspended, location updates stop. Once it's terminated, the process is gone entirely.</p>
+
+    <h2>The Exception: OS-Managed Location APIs</h2>
+
+    <p>The exception is two specific APIs that iOS treats differently: region monitoring (geofences) and significant location change monitoring. Both of these are managed by the OS, not your process. If the OS detects an event — a geofence crossing or a significant location change — it will wake your app to deliver it, even if your app was terminated.</p>
+
+    <div class="callout">
+      Significant location changes fire roughly every 500 meters and require a cell tower transition. They're not precise, but they're persistent — the OS will relaunch your app to deliver them even from a killed state.
+    </div>
+
+    <p>This two-layer approach is the key insight: use <strong>significant location changes</strong> as a coarse background heartbeat to keep your geofence set fresh, and use <strong>CLCircularRegion geofences</strong> for precise entry/exit detection. Both survive termination.</p>
+
+    <h2>Project Setup</h2>
+
+    <p>There are three things you need to configure in Xcode before any of this works. Skip any one of them and your app will silently fail to receive background events.</p>
+
+    <h2>1. Enable the Background Modes capability</h2>
+
+    <p>In Xcode, select your app target → <strong>Signing &amp; Capabilities</strong> → click <strong>+ Capability</strong> → add <strong>Background Modes</strong> → check <strong>Location updates</strong>.</p>
+
+    <p>This adds the <code>location</code> value to <code>UIBackgroundModes</code> in your Info.plist. Without it, iOS won't deliver location events to your app in the background regardless of what your code does.</p>
+
+    <h2>2. Add the required Info.plist keys</h2>
+
+    <p>You need both usage description strings — iOS requires <code>NSLocationWhenInUseUsageDescription</code> even when you're requesting Always access:</p>
+
+    <pre><code>&lt;key&gt;NSLocationWhenInUseUsageDescription&lt;/key&gt;
+&lt;string&gt;We need your location to show nearby hotspots.&lt;/string&gt;
+&lt;key&gt;NSLocationAlwaysAndWhenInUseUsageDescription&lt;/key&gt;
+&lt;string&gt;We need your location in the background to notify you when you're near a hotspot.&lt;/string&gt;</code></pre>
+
+    <p>The <code>NSLocationAlwaysAndWhenInUseUsageDescription</code> string is what the user sees when they're asked to upgrade to Always — make it specific about why the background access is needed.</p>
+
+    <h2>3. Configure the CLLocationManager</h2>
+
+    <p>Two properties need to be set before you start monitoring:</p>
+
+    <pre><code>locationManager.allowsBackgroundLocationUpdates = true
+locationManager.pausesLocationUpdatesAutomatically = false</code></pre>
+
+    <p><code>allowsBackgroundLocationUpdates</code> is required or background callbacks won't fire. <code>pausesLocationUpdatesAutomatically = false</code> prevents iOS from suspending updates when it thinks the device is stationary — important for significant location change monitoring to stay active.</p>
+
+    <h2>Requesting Always Authorization</h2>
+
+    <p>Call <code>requestAlwaysAuthorization()</code> to kick off the permission prompt. On iOS 13+, the system may show a "When In Use" dialog first and offer the Always upgrade as a separate step — this is normal iOS behavior. Your app still works with When In Use (you can seed an initial geofence set while foregrounded), but the persistent heartbeat requires Always.</p>
+
+    <pre><code>LocationManager.shared.requestAlwaysAuthorization()</code></pre>
+
+    <p>One edge case worth handling: iOS doesn't always fire <code>didChangeAuthorization</code> when the user changes permissions in Settings and returns to your app. Call <code>refreshAuthorizationStatus()</code> from your scene delegate's <code>sceneDidBecomeActive</code> to catch it:</p>
+
+    <pre><code>func sceneDidBecomeActive(_ scene: UIScene) {
+    LocationManager.shared.refreshAuthorizationStatus()
+}</code></pre>
+
+    <h2>The Solution</h2>
+
+    <p>The implementation revolves around a <code>LocationManager</code> singleton that combines both APIs. Here's the high-level setup:</p>
+
+    <pre><code>import CoreLocation
+
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    static let shared = LocationManager()
+
+    private let clManager = CLLocationManager()
+    @Published var lastLocation: CLLocation?
+    @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
+
+    private override init() {
+        super.init()
+        clManager.delegate = self
+        clManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+    }
+}</code></pre>
+
+    <p>When the user grants Always authorization, you start both monitoring layers:</p>
+
+    <pre><code>func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    authorizationStatus = manager.authorizationStatus
+
+    switch manager.authorizationStatus {
+    case .authorizedAlways:
+        // Start the persistent heartbeat — survives termination
+        clManager.startMonitoringSignificantLocationChanges()
+        // Seed initial geofences while we have a known location
+        if let location = clManager.location {
+            refreshGeofences(around: location)
+        }
+    case .authorizedWhenInUse:
+        // No background heartbeat, but we can still seed geofences while foregrounded
+        if let location = clManager.location {
+            refreshGeofences(around: location)
+        }
+    default:
+        break
+    }
+}</code></pre>
+
+    <h2>Dynamic Geofence Refresh</h2>
+
+    <p>iOS caps you at 20 monitored regions system-wide. The trick is treating those 20 slots as a sliding window — whenever you get a significant location update, you re-center the window on the user's current position.</p>
+
+    <pre><code>private let maxMonitoredRegions = 20
+private let geofenceRefreshInterval: TimeInterval = 60
+private var lastRefreshTime: Date = .distantPast
+
+func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    guard let location = locations.last else { return }
+    lastLocation = location
+
+    // Throttle API calls — don't refresh more than once per minute
+    guard Date().timeIntervalSince(lastRefreshTime) > geofenceRefreshInterval else { return }
+    lastRefreshTime = Date()
+
+    refreshGeofences(around: location)
+}
+
+private func refreshGeofences(around location: CLLocation) {
+    dataSource?.fetchNearbyPoints(latitude: location.coordinate.latitude,
+                                  longitude: location.coordinate.longitude) { [weak self] points in
+        guard let self else { return }
+
+        // Sort by distance, keep only the nearest 20
+        let nearest = points
+            .sorted { $0.distance < $1.distance }
+            .prefix(self.maxMonitoredRegions)
+
+        let newIDs = Set(nearest.map(\.id))
+        let currentIDs = Set(self.clManager.monitoredRegions.compactMap { $0.identifier })
+
+        // Remove regions that are no longer nearby
+        for region in self.clManager.monitoredRegions where !newIDs.contains(region.identifier) {
+            self.clManager.stopMonitoring(for: region)
+        }
+
+        // Add new regions, skip ones already being monitored
+        for point in nearest where !currentIDs.contains(point.id) {
+            let region = CLCircularRegion(
+                center: point.coordinate,
+                radius: point.radius,
+                identifier: point.id
+            )
+            region.notifyOnEntry = true
+            region.notifyOnExit = true
+            self.clManager.startMonitoring(for: region)
+        }
+    }
+}</code></pre>
+
+    <h2>Handling Entry and Exit Events</h2>
+
+    <p>Geofence events can fire multiple times near a boundary. A 10-second debounce per region prevents duplicate notifications:</p>
+
+    <pre><code>private var entryDebounceTimers: [String: Timer] = [:]
+private var exitDebounceTimers: [String: Timer] = [:]
+private let debounceInterval: TimeInterval = 10
+
+func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+    entryDebounceTimers[region.identifier]?.invalidate()
+    entryDebounceTimers[region.identifier] = Timer.scheduledTimer(withTimeInterval: debounceInterval, repeats: false) { [weak self] _ in
+        self?.delegate?.didEnterRegion(id: region.identifier)
+    }
+}
+
+func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+    exitDebounceTimers[region.identifier]?.invalidate()
+    exitDebounceTimers[region.identifier] = Timer.scheduledTimer(withTimeInterval: debounceInterval, repeats: false) { [weak self] _ in
+        self?.delegate?.didExitRegion(id: region.identifier)
+    }
+}</code></pre>
+
+    <p>Entry and exit timers are intentionally kept separate — a recent entry shouldn't be able to suppress a valid exit event.</p>
+
+    <h2>Integration</h2>
+
+    <p>The manager is designed around two protocols so you can plug in your own data source and event handler without touching the core logic:</p>
+
+    <pre><code>protocol GeofenceDataSource: AnyObject {
+    func fetchNearbyPoints(
+        latitude: Double,
+        longitude: Double,
+        completion: @escaping ([PointOfInterest]) -> Void
+    )
+}
+
+protocol GeofenceEventDelegate: AnyObject {
+    func didEnterRegion(id: String)
+    func didExitRegion(id: String)
+}
+
+struct PointOfInterest {
+    let id: String
+    let coordinate: CLLocationCoordinate2D
+    let radius: CLLocationDistance
+    let distance: CLLocationDistance
+}</code></pre>
+
+    <p>Wire it up in your app delegate or scene delegate:</p>
+
+    <pre><code>LocationManager.shared.dataSource = myAPIClient
+LocationManager.shared.delegate = myEventHandler
+LocationManager.shared.requestAlwaysAuthorization()</code></pre>
+
+    <p>One thing worth noting: iOS doesn't always fire <code>didChangeAuthorization</code> when the user changes permissions in Settings and returns to your app. Call <code>refreshAuthorizationStatus()</code> from <code>sceneDidBecomeActive</code> to catch those cases.</p>
+
+    <h2>Takeaways</h2>
+
+    <ul>
+      <li><strong>startUpdatingLocation() does not survive termination.</strong> If you need location events from a killed app, you need geofences or significant location changes — both are managed by the OS, not your process.</li>
+      <li><strong>Combine both APIs.</strong> Significant location changes act as a persistent heartbeat that keep your geofence set centered on the user. Geofences handle precise entry/exit detection.</li>
+      <li><strong>Manage the 20-region cap dynamically.</strong> Treat it as a sliding window — refresh the set on each location update, keeping only the nearest points.</li>
+      <li><strong>Debounce geofence events.</strong> Region boundaries can cause rapid repeated events. A short debounce (10s) prevents duplicate notifications without meaningfully delaying real ones.</li>
+    </ul>
+
+    <p>The full source is on GitHub if you want to drop it directly into a project:</p>
+
+    <a href="https://github.com/k-yleyoung/ios-persistent-geofencing" target="_blank" class="github-link">
+      View on GitHub — ios-persistent-geofencing
+    </a>
+  </div>
+</main>
+
+<footer>© 2026 Kyle Young</footer>
+</body>
+</html>
