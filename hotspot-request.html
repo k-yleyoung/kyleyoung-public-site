@@ -35,11 +35,15 @@
     #form-status { margin-top: 1rem; font-size: 0.875rem; padding: 0.75rem; border: 1px solid #000; display: none; }
     footer { padding: 1.5rem 2rem; border-top: 1px solid #000; font-size: 0.8125rem; color: #888; margin-top: 3rem; }
   </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/secondary.css">
 </head>
 <body>
 
 <header>
-  <a href="crowd-track.html" style="text-decoration:none"><h1>Crowd Track</h1></a>
+  <a href="crowd-track.html" style="text-decoration:none"><span class="site-wordmark">Crowd Track</span></a>
 </header>
 
 <nav>
@@ -47,7 +51,7 @@
 </nav>
 
 <main>
-  <h2>Request a Hotspot</h2>
+  <h1 class="page-title">Request a Hotspot</h1>
   <p class="sub">Don't see your location? Submit a request and we'll add it if it meets our criteria.</p>
 
   <form id="hotspotRequestForm" action="https://formspree.io/f/mgvkjqer" method="POST">
@@ -88,7 +92,7 @@
       <textarea id="notes" name="notes" placeholder="Any extra details about this location..."></textarea>
     </div>
     <button type="submit">Submit Request</button>
-    <div id="form-status"></div>
+    <div role="status" aria-live="polite" id="form-status"></div>
   </form>
 </main>
 
