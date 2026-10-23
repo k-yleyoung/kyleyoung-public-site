@@ -3,215 +3,155 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0e0d">
-  <meta name="description" content="Kyle Young is a software engineer building iOS experiences, intelligent systems, and things that bridge code and the physical world.">
-  <link rel="canonical" href="https://kyleyoung.dev/">
+  <meta name="theme-color" content="#f9f9f7">
+  <meta name="description" content="Kyle Young — software engineer. iOS development, full-stack software, embedded systems, and robotics.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Kyle Young — Software Engineer">
-  <meta property="og:description" content="Building what's next. Selected software, robotics, and iOS work.">
+  <meta property="og:description" content="Selected projects, work experience, and writing.">
   <meta property="og:url" content="https://kyleyoung.dev/">
-  <title>Kyle Young — Building What's Next</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://kyleyoung.dev/">
+  <title>Kyle Young — Software Engineer</title>
   <link rel="stylesheet" href="/css/site.css">
   <script defer src="/js/site.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <div class="page-progress" aria-hidden="true"></div>
-
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="Kyle Young, back to top">
-      <span class="brand-box">K<span class="brand-slash">/</span>Y</span>
-      <span class="brand-caption">INDEPENDENT<br>ENGINEER</span>
-    </a>
-    <nav class="nav" aria-label="Primary navigation">
-      <a href="#work"><span class="nav-index">01</span> WORK</a>
-      <a href="#about"><span class="nav-index">02</span> ABOUT</a>
-      <a href="#writing"><span class="nav-index">03</span> WRITING</a>
-    </nav>
-    <a class="header-contact" href="mailto:kyle@kyleyoung.dev?subject=Let's%20build%20something">
-      GET IN TOUCH <span aria-hidden="true">↗</span>
-    </a>
+    <div class="site-header-inner">
+      <a class="site-name" href="#top">Kyle Young<span class="red-dot">.</span></a>
+      <nav aria-label="Main navigation">
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#writing">Writing</a>
+        <a href="mailto:kyle@kyleyoung.dev" class="nav-contact">Contact <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="hero-grid-overlay" aria-hidden="true"></div>
-      <div class="hero-topline container">
-        <span>[ KYLE YOUNG / PORTFOLIO — 2026 ]</span>
-        <span class="hero-availability"><span class="status-led" aria-hidden="true"></span> OPEN TO WHAT'S NEXT</span>
-        <span>© 2026 <span aria-hidden="true">↗</span> BUILT FOR TOMORROW</span>
-      </div>
-
-      <div class="hero-content container">
-        <div class="hero-copy">
-          <div class="eyebrow"><span class="eyebrow-spark" aria-hidden="true">✳</span> SOFTWARE ENGINEER / CREATIVE PROBLEM SOLVER</div>
-          <h1 id="hero-title">BUILDING<br><span class="hero-serif">what's</span> <span class="outline-word">NEXT</span><span class="period">.</span></h1>
-          <p class="hero-lede">I'm Kyle Young. I turn ambitious ideas into things you can actually use — from <strong>iOS apps</strong> to <strong>autonomous machines.</strong></p>
-          <div class="hero-actions">
-            <a class="action-primary" href="#work">EXPLORE THE WORK <span aria-hidden="true">↗</span></a>
-            <a class="action-secondary" href="mailto:kyle@kyleyoung.dev">SAY HELLO <span aria-hidden="true">↗</span></a>
-          </div>
+    <section class="intro" id="top" aria-labelledby="page-title">
+      <div class="intro-copy">
+        <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> SOFTWARE ENGINEER</p>
+        <h1 id="page-title">Kyle Young<span class="red-dot">.</span></h1>
+        <p class="intro-text">I build software and hardware projects, with a focus on iOS, embedded systems, and products people actually use.</p>
+        <p class="intro-subtext">B.S. Computer Science, University of Missouri. Based in Columbia, Missouri.</p>
+        <div class="intro-links">
+          <a href="mailto:kyle@kyleyoung.dev">Email <span aria-hidden="true">↗</span></a>
+          <a href="https://github.com/k-yleyoung" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          <a href="https://linkedin.com/in/kyle--young/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
         </div>
-        <aside class="hero-art" aria-label="Animated ASCII orbital sculpture">
-          <div class="art-header"><span>OBJECT_001.ASC</span><span class="art-live"><span class="status-led" aria-hidden="true"></span> LIVE RENDER</span></div>
-          <div class="ascii-field">
-            <div class="crosshair crosshair-tl" aria-hidden="true">+</div>
-            <div class="crosshair crosshair-tr" aria-hidden="true">+</div>
-            <pre id="ascii-orbit" aria-hidden="true">              .  .  .
-          . : + * + : .
-        . = * # @ # * = .
-       : * # @ @ @ @ # * :
-       = # @ @ . . @ @ # =
-       : * # @ @ @ @ # * :
-        . = * # @ # * = .
-          . : + * + : .
-              .  .  .            </pre>
-            <div class="crosshair crosshair-bl" aria-hidden="true">+</div>
-            <div class="crosshair crosshair-br" aria-hidden="true">+</div>
-          </div>
-          <div class="art-footer"><span>X: 03.14 · Y: 08.26</span><span>FORM FOLLOWS FUNCTION_</span></div>
-          <span class="art-side-label" aria-hidden="true">GENERATIVE STUDY / 2026</span>
-        </aside>
       </div>
-      <div class="hero-bottom container">
-        <span class="scroll-marker"><span class="scroll-line" aria-hidden="true"></span> SCROLL TO EXPLORE</span>
-        <span>CODE <span aria-hidden="true">↗</span> HARDWARE <span aria-hidden="true">↗</span> EVERYTHING BETWEEN</span>
-        <span>38° 57′ N / COLUMBIA, MO</span>
+      <div class="ascii-module" id="ascii-module" role="img" aria-label="Interactive ASCII sphere that responds to cursor movement">
+        <div class="ascii-topline"><span>ASCII STUDY</span><span class="ascii-state">MOUSE INPUT</span></div>
+        <pre id="ascii-art" aria-hidden="true">            . . . .
+         . : - - - : .
+       . - + * * * + - .
+      : = * + . + * = :
+      : = * + . + * = :
+       . - + * * * + - .
+         . : - - - : .
+            . . . .            </pre>
+        <div class="ascii-bottomline"><span>MOVE CURSOR</span><span class="ascii-cross" aria-hidden="true">+</span></div>
       </div>
     </section>
 
-    <section class="statement section-light" id="about">
-      <div class="container statement-layout">
-        <div class="section-tag"><span class="number-box">/ 00</span><span>THE APPROACH</span></div>
-        <div class="statement-copy">
-          <h2>CURIOUS BY<br> <span class="serif-italic">design.</span> <span class="statement-icon" aria-hidden="true">↗</span><br>ENGINEER BY<br> <span class="underline-accent">TRADE.</span></h2>
-          <div class="statement-lower">
-            <p>I like building at the intersection of software, hardware, and human experience. The best ideas deserve the same attention to how they work as how they feel.</p>
-            <div class="statement-signature" aria-label="Current focus">
-              <span class="mini-label">CURRENT FREQUENCY</span>
-              <span>SWIFT / SYSTEMS / ROBOTICS</span>
-              <div class="tiny-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            </div>
-          </div>
-        </div>
+    <section class="resume-section" id="projects" aria-labelledby="projects-title">
+      <div class="section-label"><span class="section-number">01</span><h2 id="projects-title">Projects</h2></div>
+      <div class="section-content">
+        <article class="entry">
+          <div class="entry-heading"><h3>Gimme</h3><span class="entry-date">In development</span></div>
+          <p class="entry-subtitle">Autonomous golf-training robot</p>
+          <p>Building a robotic platform that combines computer vision, custom electronics, mechanical design, and motion control.</p>
+          <p class="entry-tools">Embedded systems · PCB design · Computer vision · Robotics</p>
+        </article>
+
+        <article class="entry">
+          <div class="entry-heading"><h3><a href="/crowd-track.html">Crowd Track <span aria-hidden="true">↗</span></a></h3><span class="entry-date">2024 – Present</span></div>
+          <p class="entry-subtitle">iOS app · Shipped on the App Store</p>
+          <p>Founded and shipped an iOS app for real-time crowd and venue insights, with a Firebase backend and interactive data visualizations.</p>
+          <p class="entry-tools">SwiftUI · Firebase · Product development</p>
+        </article>
+
+        <article class="entry">
+          <div class="entry-heading"><h3>Columbia News &amp; Weather</h3><span class="entry-date">2023</span></div>
+          <p>Created a Python-powered dashboard combining local news headlines, live weather information, and a real-time clock.</p>
+          <p class="entry-tools">Python · Web scraping · APIs</p>
+        </article>
       </div>
     </section>
 
-    <section class="work-section" id="work" aria-labelledby="work-heading">
-      <div class="container">
-        <div class="section-heading">
-          <div class="section-tag light-tag"><span class="number-box">/ 01</span><span>SELECTED WORK</span></div>
-          <h2 id="work-heading">MADE <span class="serif-italic">real.</span></h2>
-          <p>Things I've shipped. Things I'm still figuring out. All built with intention.</p>
-        </div>
-        <div class="work-grid">
-          <article class="work-card gimme-card">
-            <div class="card-top"><span class="card-code">01 / IN DEVELOPMENT</span><span class="card-dot" aria-hidden="true">●</span></div>
-            <div class="gimme-schematic" aria-hidden="true">
-              <div class="schematic-reticle"></div>
-              <span class="schematic-label top-label">AUTONOMOUS_SYSTEM / REV.G</span>
-              <div class="schematic-core"><span class="ring ring-1"></span><span class="ring ring-2"></span><span class="ring ring-3"></span><span class="core-dot">✳</span></div>
-              <span class="schematic-label bottom-label">VISION → MOTION → INTERACTION</span>
-              <span class="coord coord-1">X_091.49</span><span class="coord coord-2">SYS/ONLINE</span>
-            </div>
-            <div class="card-body">
-              <div class="card-kicker">ROBOTICS / EMBEDDED SYSTEMS / PRODUCT</div>
-              <div class="card-title-row"><h3>GIMME<span class="title-dot">.</span></h3><span class="project-seq">001 →</span></div>
-              <p>An autonomous golf-training robot bringing computer vision, custom electronics, mechanical design, and real-world movement together.</p>
-              <div class="tag-row"><span>COMPUTER VISION</span><span>PCB DESIGN</span><span>AUTONOMY</span></div>
-            </div>
-          </article>
-
-          <article class="work-card crowd-card">
-            <div class="card-top"><span class="card-code">02 / SHIPPED PRODUCT</span><span class="card-dot" aria-hidden="true">●</span></div>
-            <div class="crowd-visual" aria-label="Preview of Crowd Track iOS app">
-              <div class="crowd-halo" aria-hidden="true"></div>
-              <div class="crowd-signal" aria-hidden="true"><span>PEOPLE IN MOTION</span><span>LIVE DATA ↓</span></div>
-              <div class="phone-frame"><img src="/assets/welcomepage.jpg" alt="Crowd Track iPhone app welcome screen" loading="lazy"></div>
-              <div class="crowd-axis" aria-hidden="true">52 / 100 — LIVE</div>
-            </div>
-            <div class="card-body">
-              <div class="card-kicker">IOS / FIREBASE / PRODUCT DESIGN</div>
-              <div class="card-title-row"><h3>CROWD<br>TRACK<span class="title-dot">.</span></h3><a href="/crowd-track.html" class="circle-link" aria-label="Explore Crowd Track">↗</a></div>
-              <p>An iOS app that makes a city's energy visible through real-time crowd insights, interactive data, and community reporting.</p>
-              <div class="tag-row"><span>SWIFTUI</span><span>FIREBASE</span><span>APP STORE</span></div>
-            </div>
-          </article>
-
-          <article class="work-card news-card">
-            <div class="card-top"><span class="card-code">03 / EXPERIMENT</span><span class="card-dot" aria-hidden="true">●</span></div>
-            <div class="news-visual" aria-hidden="true">
-              <span class="news-timestamp">RECEIVING // 2023</span>
-              <pre class="news-ascii">
- [ COLUMBIA, MO ]   [ 38.95°N ]
-
- ┌───────────────────────────┐
- │ NEWS / WEATHER     ● LIVE │
- ├───────────────────────────┤
- │ &gt; CONNECTING TO SOURCES   │
- │ &gt; PARSING HEADLINES       │
- │ &gt; SYNCING FORECAST        │
- │                           │
- │ ██████████████████░░  92% │
- └───────────────────────────┘</pre>
-              <div class="news-bottom">DATA IN / INSIGHT OUT <span>↗</span></div>
-            </div>
-            <div class="card-body">
-              <div class="card-kicker">PYTHON / DATA / WEB</div>
-              <div class="card-title-row"><h3>COLUMBIA<br>NEWS &amp; WEATHER<span class="title-dot">.</span></h3><span class="project-seq">003 →</span></div>
-              <p>A local news and weather dashboard that combined scraped headlines, live conditions, and an always-on clock.</p>
-              <div class="tag-row"><span>PYTHON</span><span>WEB SCRAPING</span><span>DATA</span></div>
-            </div>
-          </article>
-        </div>
-        <div class="work-tail"><span>* SELECTED PROJECTS / MORE IN PROGRESS</span><a href="https://github.com/k-yleyoung" target="_blank" rel="noopener noreferrer">EXPLORE GITHUB <span aria-hidden="true">↗</span></a></div>
+    <section class="resume-section" id="experience" aria-labelledby="experience-title">
+      <div class="section-label"><span class="section-number">02</span><h2 id="experience-title">Experience</h2></div>
+      <div class="section-content">
+        <article class="entry">
+          <div class="entry-heading"><h3>Software Engineer Intern</h3><span class="entry-date">May – Sep 2025</span></div>
+          <p class="entry-subtitle">Ascend Learning</p>
+          <ul>
+            <li>Developed full-stack features for an internal Ruby on Rails platform used by hundreds of engineers.</li>
+            <li>Shipped a Confluence plugin that surfaced live ticket data and reduced context switching.</li>
+            <li>Worked with Kubernetes deployments and Datadog monitoring.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="entry-heading"><h3>Software Engineer Intern</h3><span class="entry-date">May – Aug 2024</span></div>
+          <p class="entry-subtitle">Veterans United Home Loans</p>
+          <ul>
+            <li>Maintained REST APIs in a .NET MVC backend and added tests for critical functionality.</li>
+            <li>Debugged production issues and shipped fixes through an Agile development workflow.</li>
+          </ul>
+        </article>
+        <article class="entry">
+          <div class="entry-heading"><h3>Data Engineer Intern</h3><span class="entry-date">Jan – May 2024</span></div>
+          <p class="entry-subtitle">World Agricultural Economic &amp; Environmental Services</p>
+          <ul>
+            <li>Built Python pipelines to extract, clean, and process USDA commodity datasets.</li>
+            <li>Developed website authentication and subscriber-only publishing features.</li>
+          </ul>
+        </article>
       </div>
     </section>
 
-    <section class="experience-section section-light" id="experience" aria-labelledby="experience-heading">
-      <div class="container">
-        <div class="section-tag"><span class="number-box">/ 02</span><span>WHERE I'VE BEEN</span></div>
-        <div class="experience-head"><h2 id="experience-heading">THE <span class="serif-italic">trajectory.</span></h2><p>A little bit of every layer, from product interfaces to infrastructure and data.</p></div>
-        <div class="experience-list">
-          <article class="experience-item"><span class="exp-no">01</span><div><h3>SOFTWARE ENGINEER INTERN</h3><p>Ascend Learning <span class="exp-divider">/</span> Ruby on Rails, Kubernetes, Datadog</p><p class="exp-description">Built full-stack features and a Confluence integration for an internal platform used by hundreds of engineers.</p></div><time>2025</time></article>
-          <article class="experience-item"><span class="exp-no">02</span><div><h3>SOFTWARE ENGINEER INTERN</h3><p>Veterans United Home Loans <span class="exp-divider">/</span> .NET, REST APIs, Angular</p><p class="exp-description">Shipped backend services, tests, and production fixes with an Agile engineering team.</p></div><time>2024</time></article>
-          <article class="experience-item"><span class="exp-no">03</span><div><h3>DATA ENGINEER INTERN</h3><p>World Agricultural Economic &amp; Environmental Services <span class="exp-divider">/</span> Python, data pipelines</p><p class="exp-description">Built automated USDA data pipelines and subscriber-facing web functionality.</p></div><time>2024</time></article>
-        </div>
-        <div class="education-strip"><span class="mini-label">EDUCATION / 2026</span><strong>B.S. COMPUTER SCIENCE</strong><span>UNIVERSITY OF MISSOURI — COLUMBIA <span aria-hidden="true">↗</span></span></div>
+    <section class="resume-section" id="skills" aria-labelledby="skills-title">
+      <div class="section-label"><span class="section-number">03</span><h2 id="skills-title">Technical skills</h2></div>
+      <div class="section-content skills-grid">
+        <div><h3>Languages</h3><p>Swift, Python, C, C#, Java, JavaScript, SQL</p></div>
+        <div><h3>Frameworks</h3><p>SwiftUI, Ruby on Rails, .NET, React, Node.js</p></div>
+        <div><h3>Tools</h3><p>Git, Firebase, Kubernetes, Datadog, Azure DevOps, Google Cloud</p></div>
+        <div><h3>Interests</h3><p>iOS development, robotics, embedded systems, product engineering</p></div>
       </div>
     </section>
 
-    <section class="writing-section" id="writing" aria-labelledby="writing-heading">
-      <div class="container">
-        <div class="section-heading writing-head">
-          <div class="section-tag light-tag"><span class="number-box">/ 03</span><span>THE LOGBOOK</span></div>
-          <h2 id="writing-heading">NOTES FROM<br><span class="serif-italic">the build.</span></h2>
-        </div>
-        <div class="journal-list">
-          <a href="/blog/swiftui-always-location.html" class="journal-entry"><span class="journal-index">001 / IOS ENGINEERING</span><h3>How I Handled “Always” Location Access in a SwiftUI App</h3><span class="journal-date">JUN 2026 <span class="journal-arrow" aria-hidden="true">↗</span></span></a>
-          <a href="/blog/crowd-counter-accuracy.html" class="journal-entry"><span class="journal-index">002 / PRODUCT ENGINEERING</span><h3>Building a Crowd Counter That Doesn't Lie</h3><span class="journal-date">MAY 2026 <span class="journal-arrow" aria-hidden="true">↗</span></span></a>
-          <a href="/blog/ios-location-monitoring-terminated.html" class="journal-entry"><span class="journal-index">003 / IOS ENGINEERING</span><h3>How to Monitor Location When an iOS App Is Terminated</h3><span class="journal-date">MAR 2026 <span class="journal-arrow" aria-hidden="true">↗</span></span></a>
-        </div>
-        <a class="all-writing" href="/blog/index.html">ALL WRITING <span aria-hidden="true">↗</span></a>
+    <section class="resume-section" id="education" aria-labelledby="education-title">
+      <div class="section-label"><span class="section-number">04</span><h2 id="education-title">Education</h2></div>
+      <div class="section-content">
+        <div class="entry-heading"><h3>University of Missouri</h3><span class="entry-date">May 2026</span></div>
+        <p class="entry-subtitle">B.S. Computer Science · GPA 3.4 / 4.0</p>
       </div>
     </section>
 
-    <section class="contact-section" id="contact" aria-labelledby="contact-heading">
-      <div class="container contact-container">
-        <div class="contact-top"><span>04 / THE NEXT CHAPTER</span><span>HAVE AN IDEA? LET'S TALK.</span></div>
-        <h2 id="contact-heading">LET'S MAKE<br><span class="contact-italic">something</span> <span class="contact-arrow" aria-hidden="true">↗</span><br>HAPPEN<span class="contact-period">.</span></h2>
-        <div class="contact-bottom"><a href="mailto:kyle@kyleyoung.dev?subject=Let's%20build%20something" class="contact-email">KYLE@KYLEYOUNG.DEV <span aria-hidden="true">↗</span></a><p>GOOD IDEAS DESERVE TO EXIST OUTSIDE YOUR HEAD.</p></div>
+    <section class="resume-section" id="writing" aria-labelledby="writing-title">
+      <div class="section-label"><span class="section-number">05</span><h2 id="writing-title">Writing</h2></div>
+      <div class="section-content writing-list">
+        <a href="/blog/swiftui-always-location.html"><span>How I Handled “Always” Location Access in a SwiftUI App</span><time>Jun 2026</time></a>
+        <a href="/blog/crowd-counter-accuracy.html"><span>Building a Crowd Counter That Doesn't Lie</span><time>May 2026</time></a>
+        <a href="/blog/ios-location-monitoring-terminated.html"><span>How to Make an iOS App Monitor Location When Terminated</span><time>Mar 2026</time></a>
+        <a href="/blog/" class="all-posts">View all posts <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="resume-section contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="section-label"><span class="section-number">06</span><h2 id="contact-title">Contact</h2></div>
+      <div class="section-content">
+        <p>For opportunities, collaborations, or questions:</p>
+        <a class="email-link" href="mailto:kyle@kyleyoung.dev">kyle@kyleyoung.dev <span aria-hidden="true">↗</span></a>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <a href="#top" class="footer-mark">K<span>/</span>Y <span class="footer-year">© 2026</span></a>
-    <div class="footer-links"><a href="https://github.com/k-yleyoung" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="https://linkedin.com/in/kyle--young/" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a><a href="mailto:kyle@kyleyoung.dev">EMAIL ↗</a></div>
-    <a href="#top" class="back-to-top">BACK TO TOP ↑</a>
+    <span>© 2026 Kyle Young</span>
+    <span>Columbia, Missouri</span>
+    <a href="#top">Back to top ↑</a>
   </footer>
 </body>
 </html>
