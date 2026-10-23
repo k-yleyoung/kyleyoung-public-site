@@ -1,207 +1,217 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kyle Young — Software Engineer">
-  <title>Kyle Young</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #fff;
-      color: #000;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    a { color: #000; }
-    a:hover { text-decoration: none; }
-
-    header {
-      padding: 2rem;
-      border-bottom: 1px solid #000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    header h1 { font-size: 1.25rem; font-weight: 600; }
-
-    .header-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
-
-    nav {
-      padding: 0 2rem;
-      border-bottom: 1px solid #000;
-      display: flex;
-      gap: 0;
-    }
-
-    nav a {
-      display: block;
-      padding: 0.75rem 0;
-      margin-right: 2rem;
-      font-size: 0.875rem;
-      text-decoration: none;
-      border-bottom: 2px solid transparent;
-    }
-
-    nav a:hover { border-bottom-color: #000; }
-
-    main { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
-
-    section { padding: 3rem 0; border-bottom: 1px solid #ddd; }
-    section:last-child { border-bottom: none; }
-
-    h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #666; margin-bottom: 1.5rem; }
-
-    .name { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .tagline { font-size: 1rem; color: #444; max-width: 500px; line-height: 1.7; }
-
-    .job { margin-bottom: 2rem; }
-    .job:last-child { margin-bottom: 0; }
-    .job-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.25rem; }
-    .job-title { font-weight: 600; }
-    .job-date { font-size: 0.8125rem; color: #888; white-space: nowrap; }
-    .job ul { margin-top: 0.5rem; padding-left: 1.25rem; color: #333; font-size: 0.9rem; }
-    .job ul li { margin-bottom: 0.25rem; }
-
-    .project { margin-bottom: 2rem; }
-    .project:last-child { margin-bottom: 0; }
-    .project-title { font-weight: 600; margin-bottom: 0.25rem; }
-    .project-title a { text-decoration: underline; }
-    .project-year { font-size: 0.8125rem; color: #888; margin-bottom: 0.4rem; }
-    .project p { font-size: 0.9rem; color: #333; }
-
-    .edu-name { font-weight: 600; }
-    .edu-detail { font-size: 0.9rem; color: #444; margin-top: 0.25rem; }
-
-    .skills-list { font-size: 0.9rem; color: #333; line-height: 2; }
-
-    .blog-post { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid #eee; text-decoration: none; color: #000; }
-    .blog-post:last-child { border-bottom: none; }
-    .blog-post:hover .blog-title { text-decoration: underline; }
-    .blog-title { font-size: 0.9375rem; }
-    .blog-date { font-size: 0.8125rem; color: #888; white-space: nowrap; }
-    .blog-see-all { font-size: 0.875rem; margin-top: 1rem; display: inline-block; }
-
-    .contact-links { display: flex; flex-direction: column; gap: 0.5rem; }
-    .contact-links a { font-size: 0.9375rem; text-decoration: underline; }
-
-    footer { padding: 1.5rem 2rem; border-top: 1px solid #000; font-size: 0.8125rem; color: #888; }
-
-    @media (max-width: 600px) {
-      .header-links { gap: 1rem; font-size: 0.8125rem; }
-      .name { font-size: 1.75rem; }
-      .job-header { flex-direction: column; gap: 0.1rem; }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0e0d">
+  <meta name="description" content="Kyle Young is a software engineer building iOS experiences, intelligent systems, and things that bridge code and the physical world.">
+  <link rel="canonical" href="https://kyleyoung.dev/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kyle Young — Software Engineer">
+  <meta property="og:description" content="Building what's next. Selected software, robotics, and iOS work.">
+  <meta property="og:url" content="https://kyleyoung.dev/">
+  <title>Kyle Young — Building What's Next</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/site.css">
+  <script defer src="/js/site.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page-progress" aria-hidden="true"></div>
 
-<header>
-  <h1>Kyle Young</h1>
-  <div class="header-links">
-    <a href="mailto:kyle@kyleyoung.dev">Email</a>
-    <a href="https://linkedin.com/in/kyle--young/" target="_blank">LinkedIn</a>
-    <a href="https://github.com/k-yleyoung" target="_blank">GitHub</a>
-  </div>
-</header>
-
-<nav>
-  <a href="#blog">Blog</a>
-  <a href="#projects">Projects</a>
-  <a href="#experience">Experience</a>
-  <a href="#education">Education</a>
-</nav>
-
-<main>
-
-  <section id="blog">
-    <h2>Recent Posts</h2>
-    <a href="blog/swiftui-always-location.html" class="blog-post">
-      <span class="blog-title">How I Handled "Always" Location Access in a SwiftUI App</span>
-      <span class="blog-date">Jun 2026</span>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Kyle Young, back to top">
+      <span class="brand-box">K<span class="brand-slash">/</span>Y</span>
+      <span class="brand-caption">INDEPENDENT<br>ENGINEER</span>
     </a>
-    <a href="blog/crowd-counter-accuracy.html" class="blog-post">
-      <span class="blog-title">Building a Crowd Counter That Doesn't Lie</span>
-      <span class="blog-date">May 2026</span>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#work"><span class="nav-index">01</span> WORK</a>
+      <a href="#about"><span class="nav-index">02</span> ABOUT</a>
+      <a href="#writing"><span class="nav-index">03</span> WRITING</a>
+    </nav>
+    <a class="header-contact" href="mailto:kyle@kyleyoung.dev?subject=Let's%20build%20something">
+      GET IN TOUCH <span aria-hidden="true">↗</span>
     </a>
-    <a href="blog/ios-location-monitoring-terminated.html" class="blog-post">
-      <span class="blog-title">How to Make an iOS App Monitor Location When Terminated/Killed</span>
-      <span class="blog-date">Mar 2026</span>
-    </a>
-    <a href="blog/index.html" class="blog-see-all">All posts →</a>
-  </section>
+  </header>
 
-  <section id="projects">
-    <h2>Projects</h2>
-
-    <div class="project">
-      <div class="project-title"><a href="crowd-track.html">Crowd Track — iOS App</a></div>
-      <div class="project-year">2024 – Present</div>
-      <p>Full-stack SwiftUI app for real-time and historical crowd analytics. Firebase backend, interactive graphs, live reporting, and a chat feature. Available on the App Store.</p>
-    </div>
-
-    <div class="project">
-      <div class="project-title">Columbia News &amp; Weather</div>
-      <div class="project-year">2023</div>
-      <p>Python web scraper displaying Columbia Tribune headlines alongside live weather data and a real-time clock.</p>
-    </div>
-  </section>
-
-  <section id="experience">
-    <h2>Experience</h2>
-
-    <div class="job">
-      <div class="job-header">
-        <span class="job-title">Ascend Learning — Software Engineer Intern</span>
-        <span class="job-date">May – September 2025</span>
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-grid-overlay" aria-hidden="true"></div>
+      <div class="hero-topline container">
+        <span>[ KYLE YOUNG / PORTFOLIO — 2026 ]</span>
+        <span class="hero-availability"><span class="status-led" aria-hidden="true"></span> OPEN TO WHAT'S NEXT</span>
+        <span>© 2026 <span aria-hidden="true">↗</span> BUILT FOR TOMORROW</span>
       </div>
-      <ul>
-        <li>Developed full-stack features for an internal ticketing and support platform built with Ruby on Rails, used by 800+ engineers company-wide.</li>
-        <li>Designed and shipped a Confluence plugin that surfaced live ticket data inside Confluence pages, eliminating context-switching between tools for support staff.</li>
-        <li>Deployed services on Kubernetes and instrumented monitoring with Datadog dashboards and alerts to improve incident response.</li>
-      </ul>
-    </div>
 
-    <div class="job">
-      <div class="job-header">
-        <span class="job-title">Veterans United Home Loans — Software Engineer Intern</span>
-        <span class="job-date">May – August 2024</span>
+      <div class="hero-content container">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-spark" aria-hidden="true">✳</span> SOFTWARE ENGINEER / CREATIVE PROBLEM SOLVER</div>
+          <h1 id="hero-title">BUILDING<br><span class="hero-serif">what's</span> <span class="outline-word">NEXT</span><span class="period">.</span></h1>
+          <p class="hero-lede">I'm Kyle Young. I turn ambitious ideas into things you can actually use — from <strong>iOS apps</strong> to <strong>autonomous machines.</strong></p>
+          <div class="hero-actions">
+            <a class="action-primary" href="#work">EXPLORE THE WORK <span aria-hidden="true">↗</span></a>
+            <a class="action-secondary" href="mailto:kyle@kyleyoung.dev">SAY HELLO <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <aside class="hero-art" aria-label="Animated ASCII orbital sculpture">
+          <div class="art-header"><span>OBJECT_001.ASC</span><span class="art-live"><span class="status-led" aria-hidden="true"></span> LIVE RENDER</span></div>
+          <div class="ascii-field">
+            <div class="crosshair crosshair-tl" aria-hidden="true">+</div>
+            <div class="crosshair crosshair-tr" aria-hidden="true">+</div>
+            <pre id="ascii-orbit" aria-hidden="true">              .  .  .
+          . : + * + : .
+        . = * # @ # * = .
+       : * # @ @ @ @ # * :
+       = # @ @ . . @ @ # =
+       : * # @ @ @ @ # * :
+        . = * # @ # * = .
+          . : + * + : .
+              .  .  .            </pre>
+            <div class="crosshair crosshair-bl" aria-hidden="true">+</div>
+            <div class="crosshair crosshair-br" aria-hidden="true">+</div>
+          </div>
+          <div class="art-footer"><span>X: 03.14 · Y: 08.26</span><span>FORM FOLLOWS FUNCTION_</span></div>
+          <span class="art-side-label" aria-hidden="true">GENERATIVE STUDY / 2026</span>
+        </aside>
       </div>
-      <ul>
-        <li>Maintained and extended 4–10 RESTful APIs in a .NET MVC backend services codebase, applying Test-Driven Development to add coverage on critical paths.</li>
-        <li>Diagnosed and resolved production bugs across backend services, shipping fixes through GitLab merge requests and Azure DevOps CI/CD pipelines.</li>
-        <li>Collaborated in a 6-person Agile team using pair programming, sprint planning, and code review.</li>
-      </ul>
-    </div>
-
-    <div class="job">
-      <div class="job-header">
-        <span class="job-title">World Agricultural Economic &amp; Environmental Services — Data Engineer Intern</span>
-        <span class="job-date">January – May 2024</span>
+      <div class="hero-bottom container">
+        <span class="scroll-marker"><span class="scroll-line" aria-hidden="true"></span> SCROLL TO EXPLORE</span>
+        <span>CODE <span aria-hidden="true">↗</span> HARDWARE <span aria-hidden="true">↗</span> EVERYTHING BETWEEN</span>
+        <span>38° 57′ N / COLUMBIA, MO</span>
       </div>
-      <ul>
-        <li>Built Python data pipelines to extract, clean, and process USDA commodity datasets on demand, replacing a manual workflow and enabling structured data delivery to downstream consumers.</li>
-        <li>Developed client login authentication and a client-facing blog for the company website, enabling subscriber-only content delivery to paying clients.</li>
-      </ul>
-    </div>
-  </section>
+    </section>
 
-  <section id="education">
-    <h2>Education</h2>
-    <div class="edu-name">University of Missouri – Columbia</div>
-    <div class="edu-detail">B.S. Computer Science — May 2026</div>
-  </section>
+    <section class="statement section-light" id="about">
+      <div class="container statement-layout">
+        <div class="section-tag"><span class="number-box">/ 00</span><span>THE APPROACH</span></div>
+        <div class="statement-copy">
+          <h2>CURIOUS BY<br> <span class="serif-italic">design.</span> <span class="statement-icon" aria-hidden="true">↗</span><br>ENGINEER BY<br> <span class="underline-accent">TRADE.</span></h2>
+          <div class="statement-lower">
+            <p>I like building at the intersection of software, hardware, and human experience. The best ideas deserve the same attention to how they work as how they feel.</p>
+            <div class="statement-signature" aria-label="Current focus">
+              <span class="mini-label">CURRENT FREQUENCY</span>
+              <span>SWIFT / SYSTEMS / ROBOTICS</span>
+              <div class="tiny-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section class="work-section" id="work" aria-labelledby="work-heading">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-tag light-tag"><span class="number-box">/ 01</span><span>SELECTED WORK</span></div>
+          <h2 id="work-heading">MADE <span class="serif-italic">real.</span></h2>
+          <p>Things I've shipped. Things I'm still figuring out. All built with intention.</p>
+        </div>
+        <div class="work-grid">
+          <article class="work-card gimme-card">
+            <div class="card-top"><span class="card-code">01 / IN DEVELOPMENT</span><span class="card-dot" aria-hidden="true">●</span></div>
+            <div class="gimme-schematic" aria-hidden="true">
+              <div class="schematic-reticle"></div>
+              <span class="schematic-label top-label">AUTONOMOUS_SYSTEM / REV.G</span>
+              <div class="schematic-core"><span class="ring ring-1"></span><span class="ring ring-2"></span><span class="ring ring-3"></span><span class="core-dot">✳</span></div>
+              <span class="schematic-label bottom-label">VISION → MOTION → INTERACTION</span>
+              <span class="coord coord-1">X_091.49</span><span class="coord coord-2">SYS/ONLINE</span>
+            </div>
+            <div class="card-body">
+              <div class="card-kicker">ROBOTICS / EMBEDDED SYSTEMS / PRODUCT</div>
+              <div class="card-title-row"><h3>GIMME<span class="title-dot">.</span></h3><span class="project-seq">001 →</span></div>
+              <p>An autonomous golf-training robot bringing computer vision, custom electronics, mechanical design, and real-world movement together.</p>
+              <div class="tag-row"><span>COMPUTER VISION</span><span>PCB DESIGN</span><span>AUTONOMY</span></div>
+            </div>
+          </article>
 
-</main>
+          <article class="work-card crowd-card">
+            <div class="card-top"><span class="card-code">02 / SHIPPED PRODUCT</span><span class="card-dot" aria-hidden="true">●</span></div>
+            <div class="crowd-visual" aria-label="Preview of Crowd Track iOS app">
+              <div class="crowd-halo" aria-hidden="true"></div>
+              <div class="crowd-signal" aria-hidden="true"><span>PEOPLE IN MOTION</span><span>LIVE DATA ↓</span></div>
+              <div class="phone-frame"><img src="/assets/welcomepage.jpg" alt="Crowd Track iPhone app welcome screen" loading="lazy"></div>
+              <div class="crowd-axis" aria-hidden="true">52 / 100 — LIVE</div>
+            </div>
+            <div class="card-body">
+              <div class="card-kicker">IOS / FIREBASE / PRODUCT DESIGN</div>
+              <div class="card-title-row"><h3>CROWD<br>TRACK<span class="title-dot">.</span></h3><a href="/crowd-track.html" class="circle-link" aria-label="Explore Crowd Track">↗</a></div>
+              <p>An iOS app that makes a city's energy visible through real-time crowd insights, interactive data, and community reporting.</p>
+              <div class="tag-row"><span>SWIFTUI</span><span>FIREBASE</span><span>APP STORE</span></div>
+            </div>
+          </article>
 
-<footer>© 2026 Kyle Young</footer>
+          <article class="work-card news-card">
+            <div class="card-top"><span class="card-code">03 / EXPERIMENT</span><span class="card-dot" aria-hidden="true">●</span></div>
+            <div class="news-visual" aria-hidden="true">
+              <span class="news-timestamp">RECEIVING // 2023</span>
+              <pre class="news-ascii">
+ [ COLUMBIA, MO ]   [ 38.95°N ]
 
+ ┌───────────────────────────┐
+ │ NEWS / WEATHER     ● LIVE │
+ ├───────────────────────────┤
+ │ &gt; CONNECTING TO SOURCES   │
+ │ &gt; PARSING HEADLINES       │
+ │ &gt; SYNCING FORECAST        │
+ │                           │
+ │ ██████████████████░░  92% │
+ └───────────────────────────┘</pre>
+              <div class="news-bottom">DATA IN / INSIGHT OUT <span>↗</span></div>
+            </div>
+            <div class="card-body">
+              <div class="card-kicker">PYTHON / DATA / WEB</div>
+              <div class="card-title-row"><h3>COLUMBIA<br>NEWS &amp; WEATHER<span class="title-dot">.</span></h3><span class="project-seq">003 →</span></div>
+              <p>A local news and weather dashboard that combined scraped headlines, live conditions, and an always-on clock.</p>
+              <div class="tag-row"><span>PYTHON</span><span>WEB SCRAPING</span><span>DATA</span></div>
+            </div>
+          </article>
+        </div>
+        <div class="work-tail"><span>* SELECTED PROJECTS / MORE IN PROGRESS</span><a href="https://github.com/k-yleyoung" target="_blank" rel="noopener noreferrer">EXPLORE GITHUB <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+
+    <section class="experience-section section-light" id="experience" aria-labelledby="experience-heading">
+      <div class="container">
+        <div class="section-tag"><span class="number-box">/ 02</span><span>WHERE I'VE BEEN</span></div>
+        <div class="experience-head"><h2 id="experience-heading">THE <span class="serif-italic">trajectory.</span></h2><p>A little bit of every layer, from product interfaces to infrastructure and data.</p></div>
+        <div class="experience-list">
+          <article class="experience-item"><span class="exp-no">01</span><div><h3>SOFTWARE ENGINEER INTERN</h3><p>Ascend Learning <span class="exp-divider">/</span> Ruby on Rails, Kubernetes, Datadog</p><p class="exp-description">Built full-stack features and a Confluence integration for an internal platform used by hundreds of engineers.</p></div><time>2025</time></article>
+          <article class="experience-item"><span class="exp-no">02</span><div><h3>SOFTWARE ENGINEER INTERN</h3><p>Veterans United Home Loans <span class="exp-divider">/</span> .NET, REST APIs, Angular</p><p class="exp-description">Shipped backend services, tests, and production fixes with an Agile engineering team.</p></div><time>2024</time></article>
+          <article class="experience-item"><span class="exp-no">03</span><div><h3>DATA ENGINEER INTERN</h3><p>World Agricultural Economic &amp; Environmental Services <span class="exp-divider">/</span> Python, data pipelines</p><p class="exp-description">Built automated USDA data pipelines and subscriber-facing web functionality.</p></div><time>2024</time></article>
+        </div>
+        <div class="education-strip"><span class="mini-label">EDUCATION / 2026</span><strong>B.S. COMPUTER SCIENCE</strong><span>UNIVERSITY OF MISSOURI — COLUMBIA <span aria-hidden="true">↗</span></span></div>
+      </div>
+    </section>
+
+    <section class="writing-section" id="writing" aria-labelledby="writing-heading">
+      <div class="container">
+        <div class="section-heading writing-head">
+          <div class="section-tag light-tag"><span class="number-box">/ 03</span><span>THE LOGBOOK</span></div>
+          <h2 id="writing-heading">NOTES FROM<br><span class="serif-italic">the build.</span></h2>
+        </div>
+        <div class="journal-list">
+          <a href="/blog/swiftui-always-location.html" class="journal-entry"><span class="journal-index">001 / IOS ENGINEERING</span><h3>How I Handled “Always” Location Access in a SwiftUI App</h3><span class="journal-date">JUN 2026 <span class="journal-arrow" aria-hidden="true">↗</span></span></a>
+          <a href="/blog/crowd-counter-accuracy.html" class="journal-entry"><span class="journal-index">002 / PRODUCT ENGINEERING</span><h3>Building a Crowd Counter That Doesn't Lie</h3><span class="journal-date">MAY 2026 <span class="journal-arrow" aria-hidden="true">↗</span></span></a>
+          <a href="/blog/ios-location-monitoring-terminated.html" class="journal-entry"><span class="journal-index">003 / IOS ENGINEERING</span><h3>How to Monitor Location When an iOS App Is Terminated</h3><span class="journal-date">MAR 2026 <span class="journal-arrow" aria-hidden="true">↗</span></span></a>
+        </div>
+        <a class="all-writing" href="/blog/index.html">ALL WRITING <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact" aria-labelledby="contact-heading">
+      <div class="container contact-container">
+        <div class="contact-top"><span>04 / THE NEXT CHAPTER</span><span>HAVE AN IDEA? LET'S TALK.</span></div>
+        <h2 id="contact-heading">LET'S MAKE<br><span class="contact-italic">something</span> <span class="contact-arrow" aria-hidden="true">↗</span><br>HAPPEN<span class="contact-period">.</span></h2>
+        <div class="contact-bottom"><a href="mailto:kyle@kyleyoung.dev?subject=Let's%20build%20something" class="contact-email">KYLE@KYLEYOUNG.DEV <span aria-hidden="true">↗</span></a><p>GOOD IDEAS DESERVE TO EXIST OUTSIDE YOUR HEAD.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="#top" class="footer-mark">K<span>/</span>Y <span class="footer-year">© 2026</span></a>
+    <div class="footer-links"><a href="https://github.com/k-yleyoung" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="https://linkedin.com/in/kyle--young/" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a><a href="mailto:kyle@kyleyoung.dev">EMAIL ↗</a></div>
+    <a href="#top" class="back-to-top">BACK TO TOP ↑</a>
+  </footer>
 </body>
 </html>
