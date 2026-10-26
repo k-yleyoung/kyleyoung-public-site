@@ -78,6 +78,12 @@ main { width: min(1080px, calc(100% - 64px)); margin: auto; }
 .section-content li { padding-left: 2px; margin: 5px 0; }
 .section-content li::marker { color: var(--accent); }
 
+.project-quote { margin: 0 0 47px 233px; padding: 2px 0 2px 22px; border-left: 2px solid var(--accent); }
+.project-quote blockquote { margin: 0; }
+.project-quote p { margin: 0; color: var(--text); font-size: clamp(20px, 2.2vw, 24px); line-height: 1.55; letter-spacing: -.025em; }
+.project-quote figcaption { margin-top: 14px; color: var(--secondary); font: 400 11px/1.7 var(--mono); }
+.quote-author { color: var(--accent); }
+
 .skills-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 45px; row-gap: 25px; }
 .skills-grid h3 { font-size: 14px; }
 .skills-grid p { margin-top: 6px; }
@@ -101,6 +107,7 @@ main { width: min(1080px, calc(100% - 64px)); margin: auto; }
   .ascii-module { max-width: 500px; width: 100%; height: 385px; }
   #ascii-art { font-size: 9px; }
   .resume-section { grid-template-columns: 140px minmax(0,1fr); gap: 25px; }
+  .project-quote { margin-left: 165px; }
 }
 @media (max-width: 560px) {
   .site-header-inner, main, .site-footer { width: calc(100% - 36px); }
@@ -115,6 +122,7 @@ main { width: min(1080px, calc(100% - 64px)); margin: auto; }
   .ascii-module { height: 342px; }
   #ascii-art { font-size: clamp(6.8px, 1.95vw, 9px); }
   .resume-section { display: block; padding: 27px 0 38px; }
+  .project-quote { margin: 0 0 38px; padding-left: 18px; }
   .section-label { margin-bottom: 24px; }
   .entry-heading { align-items: start; }
   .entry-heading h3 { font-size: 16px; }
